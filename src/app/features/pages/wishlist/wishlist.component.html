@@ -1,0 +1,37 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">Wishlist</h2>
+    
+    <div *ngIf="!wishlistLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+
+    <div class="row g-3" *ngIf="wishlistLoaded">
+        @for (item of wishlistItems; track $index) {
+        <div class="col-6 col-md-4 col-lg-3 d-flex">
+            <div class="py-2 border rounded-3 w-100 h-100 d-flex flex-column align-items-center bg-white">
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center" (click)="prodDetails(item.id)">
+                    <img [src]="item.imageCover" class="img-fluid">
+                </div>
+                <p class="text-center my-2 fw-semibold px-3">{{ item.title }}</p>
+                <button class="btn btn-dark w-75 mb-2" (click)="removeFromWishlist(item.id)">
+                    @if (loadingRemoveId === item.id) {
+                        <span class="spinner-border spinner-border-sm"></span>
+                    } @else {
+                        Remove
+                    }
+                </button>
+                <button class="btn btn-dark w-75 mb-2" (click)="addToCart(item.id)">
+                    @if (loadingAddId === item.id) {
+                        <span class="spinner-border spinner-border-sm"></span>
+                    } @else {
+                        Add To Cart
+                    }
+                </button>
+            </div>
+        </div>
+        }
+        @empty {
+        <h4 class="text-muted">You have no items in your wishlist.</h4>
+        }
+    </div>
+</div>

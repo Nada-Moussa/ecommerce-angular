@@ -1,0 +1,22 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">Categories</h2>
+    <div *ngIf="!catsLoaded" class="text-center py-5">
+        <app-loading></app-loading>
+    </div>
+    <div class="row g-3" *ngIf="catsLoaded">
+        @for (cat of allCats; track $index) {
+        <div class="col-6 col-md-4 col-lg-3 d-flex">
+            <div class="py-2 border rounded-3 w-100 h-100 d-flex flex-column bg-white"
+                (click)="goToSubCat(cat._id, cat.name)">
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+                    <img [src]="cat.image" class="img-fluid">
+                </div>
+                <p class="text-center my-2 fs-5">{{ cat.name }}</p>
+            </div>
+        </div>
+        }
+        <!-- @empty {
+        <h4>No categories available.</h4>
+        } -->
+    </div>
+</div>

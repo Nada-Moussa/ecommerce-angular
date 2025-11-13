@@ -1,0 +1,35 @@
+<div class="container pt-5 my-5">
+    <h2 class="my-4 text-primary fw-semibold">Log in</h2>
+
+    <form [formGroup]="loginForm">
+        <label class="fs-4 py-2" for="email">Email</label>
+        <input type="email" class="form-control mb-3 fs-5" id="email" formControlName="email">
+        @if (loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Email is required.
+        </div>
+        }
+        @if (loginForm.get('email')?.hasError('email')) {
+        <div class="alert alert-danger" role="alert">
+            Enter a valid email.
+        </div>
+        }
+        <label class="fs-4 py-2" for="password">Password</label>
+        <input type="password" class="form-control mb-3" id="password" formControlName="password">
+        @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Password is required.
+        </div>
+        }
+        @if (loginForm.get('password')?.hasError('minlength') ) {
+        <div class="alert alert-danger" role="alert">
+            Password should be a minimum of 6 characters.
+        </div>
+        }
+        <div class="d-flex my-4 align-items-center">
+            <button class="btn btn-success fs-5 me-3" (click)="login()">Login</button>
+            <a class="fs-5" (click)="resetPass()">Forgot Password</a>
+        </div>
+    </form>
+
+</div>

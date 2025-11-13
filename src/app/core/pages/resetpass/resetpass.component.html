@@ -1,0 +1,39 @@
+<div class="container my-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">Reset Password</h2>
+
+    <form [formGroup]="resetForm" (ngSubmit)="updatePass()">
+        <label class="py-2 fs-4" for="currentPassword">Current Password</label>
+        <input type="password" class="form-control mb-3 fs-5" id="currentPassword" formControlName="currentPassword">
+        @if (resetForm.get('currentPassword')?.hasError('required') && resetForm.get('password')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Password is required.
+        </div>
+        }
+        <label class="py-2 fs-4" for="password">New Password</label>
+        <input type="password" class="form-control mb-3 fs-5" id="password" formControlName="password">
+        @if (resetForm.get('password')?.hasError('required') && resetForm.get('password')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Password is required.
+        </div>
+        }
+        @if (resetForm.get('password')?.hasError('minlength') ) {
+        <div class="alert alert-danger" role="alert">
+            Password should be a minimum of 6 characters.
+        </div>
+        }
+        <label class="py-2 fs-4" for="rePassword">Confirm Password</label>
+        <input type="password" class="form-control mb-3 fs-5" id="rePassword" formControlName="rePassword">
+        @if (resetForm.get('rePassword')?.hasError('required') && resetForm.get('rePassword')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Confirming the password is required.
+        </div>
+        }
+        @if (resetForm.get('rePassword')?.hasError('mismatch')) {
+        <div class="alert alert-danger" role="alert">
+            Passwords don't match
+        </div>
+        }
+        <button class="btn btn-success d-block ms-auto fs-5">Reset Password</button>
+    </form>
+
+</div>

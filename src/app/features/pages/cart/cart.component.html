@@ -1,0 +1,58 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">Cart</h2>
+    <div *ngIf="!cartLoaded" class="text-center py-5">
+        <app-loading></app-loading>
+    </div>
+    <div class="row g-3" *ngIf="cartLoaded">
+        @for (item of cartItems; track $index) {
+        <div class="col-6 col-md-4 col-lg-3 d-flex">
+            <div class="py-2 border rounded-3 w-100 h-100 d-flex flex-column align-items-center bg-white">
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+                    <img [src]="item.product.imageCover" class="img-fluid">
+                </div>
+                <p class="text-center my-2 fw-semibold px-2">{{ item.product.title }}</p>
+                <p class="fs-6 badge text-bg-secondary">{{item.price | number: '1.0-0'}} EGP</p>
+                <div class="text-center my-2 d-flex align-items-center justify-content-center gap-2">
+                    <p class="text-muted mb-0">Quantity:</p>
+                    <button class="btn btn-dark d-flex align-items-center justify-content-center px-3"
+                        (click)="updateItemQuantity(item.product.id, item.count - 1)"> - </button>
+                    <p class="mb-0 fs-5">
+                        @if (updatingQuantityId === item.product.id) {
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                        } @else {
+                        <span>{{item.count}}</span>
+                        }
+                    </p>
+                    <button class="btn btn-dark d-flex align-items-center justify-content-center px-3"
+                        (click)="updateItemQuantity(item.product.id, item.count + 1)">+</button>
+                </div>
+                <button class="btn btn-dark w-75 mb-2" (click)="removeFromCart(item.product.id)">
+                    @if (loadingRemoveId === item.product.id) {
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    } @else {
+                    <span>Remove</span>
+                    }
+
+                </button>
+            </div>
+        </div>
+        }
+        @empty {
+        <h4 class="text-muted">You have no items in your cart.</h4>
+        }
+    </div>
+    <div class="d-flex align-items-center mt-4" *ngIf="cartLoaded && cartItems.length>0">
+        <h2 class="text-primary">Total Price: </h2>
+        <p class="fst-italic m-0 fs-4 ps-2"> {{cart.totalCartPrice | number: '1.0-0'}} EGP</p>
+    </div>
+    <div *ngIf="cartLoaded && cartItems.length>0">
+        <button class="btn btn-dark fs-5 my-0 me-2" (click)="clearCart()">
+            @if (clearingCart) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            } @else {
+            <span>Clear Cart</span>
+            }
+        </button>
+        <button class="btn btn-dark fs-5 my-0" (click)="checkout()">Proceed To Checkout</button>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-3 text-primary fw-semibold">Reset Password</h2>
+
+    <form [formGroup]="forgotPassForm" (ngSubmit)="forgotPass()">
+        <label class="fs-4 py-2" for="email">Email</label>
+        <input type="email" class="form-control mb-3 fs-5" id="email" formControlName="email">
+        @if (forgotPassForm.get('email')?.hasError('required') && forgotPassForm.get('email')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Email is required.
+        </div>
+        }
+        @if (forgotPassForm.get('email')?.hasError('email')) {
+        <div class="alert alert-danger" role="alert">
+            Enter a valid email.
+        </div>
+        }
+        <button class="btn btn-success d-block me-auto fs-5">Reset Password</button>
+    </form>
+
+</div>

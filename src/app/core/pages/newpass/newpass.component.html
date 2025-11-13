@@ -1,0 +1,44 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-3 text-primary fw-semibold">Reset Password</h2>
+
+    <form [formGroup]="resetForm" (ngSubmit)="resetPass()">
+        <label class="fs-4 py-2" for="email">Email</label>
+        <input type="email" class="form-control mb-3 fs-5" id="email" formControlName="email">
+        @if (resetForm.get('email')?.hasError('required') && resetForm.get('email')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Email is required.
+        </div>
+        }
+        @if (resetForm.get('email')?.hasError('email')) {
+        <div class="alert alert-danger" role="alert">
+            Enter a valid email.
+        </div>
+        }
+        <label class="fs-4 py-2" for="newPassword">New Password</label>
+        <input type="password" class="form-control mb-3 fs-5" id="password" formControlName="newPassword">
+        @if (resetForm.get('newPassword')?.hasError('required') && resetForm.get('newPassword')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Password is required.
+        </div>
+        }
+        @if (resetForm.get('newPassword')?.hasError('minlength') ) {
+        <div class="alert alert-danger" role="alert">
+            Password should be a minimum of 6 characters.
+        </div>
+        }
+        <label class="fs-4 py-2" for="rePassword">Confirm Password</label>
+        <input type="password" class="form-control mb-3 fs-5" id="rePassword" formControlName="rePassword">
+        @if (resetForm.get('rePassword')?.hasError('required') && resetForm.get('rePassword')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Confirming the password is required.
+        </div>
+        }
+        @if (resetForm.get('rePassword')?.hasError('mismatch')) {
+        <div class="alert alert-danger" role="alert">
+            Passwords don't match
+        </div>
+        }
+        <button class="btn btn-success d-block ms-auto fs-5">Reset Password</button>
+    </form>
+
+</div>

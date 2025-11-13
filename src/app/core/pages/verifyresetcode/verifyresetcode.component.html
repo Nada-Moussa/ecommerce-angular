@@ -1,0 +1,20 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-3 text-primary fw-semibold">Verify Reset Code</h2>
+
+    <form [formGroup]="verifyCodeForm" (ngSubmit)="verifyCode()">
+        <label class="fs-4 py-2" for="resetCode">Enter The Verification Code You Received</label>
+        <input type="text" class="form-control mb-3 fs-5" id="resetCode" formControlName="resetCode">
+        @if (verifyCodeForm.get('resetCode')?.hasError('required') && verifyCodeForm.get('resetCode')?.touched) {
+        <div class="alert alert-danger" role="alert">
+            Verification is required.
+        </div>
+        }
+        @if (verifyCodeForm.get('resetCode')?.hasError('pattern')) {
+        <div class="alert alert-danger" role="alert">
+            The verification code is a 6 digits number.
+        </div>
+        }
+        <button class="btn btn-success d-block me-auto fs-5">Verify</button>
+    </form>
+
+</div>

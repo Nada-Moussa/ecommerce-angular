@@ -1,0 +1,28 @@
+<div class="container mt-5 py-5">
+  <h2 class="my-4 text-primary fw-semibold">Orders</h2>
+
+  <div *ngIf="!ordersLoaded" class="text-center py-5">
+    <app-loading></app-loading>
+  </div>
+
+  <div class="bg-white bg-opacity-75 p-4 rounded-2" *ngIf="ordersLoaded">
+    @for (order of ordersList; track $index) {
+    <div class="bg-info p-3 m-3 rounded-2">
+      <h4 class="text-primary text-decoration-underline mb-3">Order #{{order.id}}</h4>
+      <p class="fs-5 m-0 fw-bold">Order Items:</p>
+      <div class="ps-4 my-3">
+        @for(item of order.cartItems ; track $index) {
+        <li class="fs-5">{{item.product.title}}</li>
+        }
+      </div>
+      <p class="fs-5"><strong>Order Cost:</strong><span class="fst-italic"> {{order.totalOrderPrice | number: '1.0-0'}}
+          EGP </span> </p>
+      <p class="fs-5"><strong>Order Contact#:</strong> {{order.shippingAddress.phone}}</p>
+      <p class="fs-5"><strong>Shipping Address:</strong> {{order.shippingAddress.details}},
+        {{order.shippingAddress.city}}</p>
+      <p class="fs-5"><strong>Payment Method:</strong> {{order.paymentMethodType}}</p>
+    </div>
+    }
+  </div>
+
+</div>

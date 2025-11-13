@@ -1,0 +1,65 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">Checkout</h2>
+    <div class="bg-white bg-opacity-75 p-4 rounded-2">
+        <h3 class="text-primary">Order Items</h3>
+        <div *ngIf="!orderLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+        <div *ngIf="orderLoaded">
+            @for (item of cartItems; track $index) {
+            <div class="bg-info p-3 m-3 rounded-2">
+                <h4>{{item.product.title}}</h4>
+                <p class="fs-5"><strong>Price: </strong> <span class="fst-italic">{{ (item.price * item.count) | number:
+                        '1.0-0'}} EGP </span>
+                </p>
+            </div>
+            }
+        </div>
+        <div class="d-flex align-items-center mt-4">
+            <h4 class="text-primary">Total Price: </h4>
+            <p class="fst-italic m-0 fs-4 ps-2"> {{cart.totalCartPrice | number: '1.0-0'}} EGP</p>
+        </div>
+    </div>
+
+    <div class="my-4 bg-white bg-opacity-75 p-4 rounded-2">
+        <h3 class="text-primary">Select Shipping Address</h3>
+        <div *ngIf="!addressesLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+        <div *ngIf="addressList.length > 0 && addressesLoaded">
+            <div *ngFor="let address of addressList" class="form-check my-3">
+                <input class="form-check-input" type="radio" name="selectedAddress" [value]="address._id"
+                    [(ngModel)]="selectedAddressId" id="{{ address._id }}" />
+                <label class="form-check-label fs-5" [for]="address._id">
+                    <strong>{{ address.name }}</strong><br />
+                    <i class="bi bi-geo-fill pe-2"></i>{{ address.details }}, {{ address.city }}<br />
+                    <i class="bi bi-telephone-fill pe-2"></i> {{ address.phone }}
+                </label>
+            </div>
+        </div>
+        <div *ngIf="addressList.length < 1;">
+            <button class="btn btn-dark fs-5 my-0 me-2" (click)="addAddress()">Add Adress</button>
+        </div>
+
+    </div>
+
+    <div class="my-4 bg-white bg-opacity-75 p-4 rounded-2">
+        <h3 class="text-primary">Select Payment Method</h3>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="cash" value="cash"
+                [(ngModel)]="paymentMethod" checked />
+            <label class="form-check-label fs-5" for="cash">Cash on Delivery</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="online" value="online"
+                [(ngModel)]="paymentMethod" />
+            <label class="form-check-label fs-5" for="online">Pay Online</label>
+        </div>
+    </div>
+
+
+    <div class="d-flex my-4">
+        <button class="btn btn-dark fs-5 my-0 me-2" (click)="backToCart()">Edit Order</button>
+        <button class="btn btn-success fs-5 my-0" (click)="confirmOrder(cart._id, shippingAddress)">Confirm
+            Order</button>
+    </div>

@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bs-primary-rgb: 11, 56, 90; /* dark blue */
+  --bs-secondary-rgb: 69, 104, 130; /*muted blue */
+  --bs-success-rgb: 88, 135, 92; /* grayish green */
+  --bs-danger-rgb: 156, 143, 135; /* brown-beige */ 
+  --bs-warning-rgb: 210, 193, 182; /* warm beige */
+  --bs-info-rgb: 249, 243, 239; /* light cream */
+  --muted-red: 176, 64, 58 /* muted red */
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: rgb(var(--bs-info-rgb));
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.btn-dark {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: rgb(var(--bs-danger-rgb));
+  --bs-btn-border-color: rgb(var(--bs-danger-rgb));
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #756B65;
+  --bs-btn-hover-border-color: rgb(var(--bs-danger-rgb));
+  --bs-btn-focus-shadow-rgb: 225, 83, 97;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: rgb(var(--bs-info-rgb));
+  --bs-btn-active-border-color: rgb(var(--bs-info-rgb));
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: rgb(var(--bs-primary-rgb));
+  --bs-btn-disabled-bg: rgb(var(--bs-secondary-rgb));
+  --bs-btn-disabled-border-color: rgb(var(--bs-secondary-rgb));
+}
+
+.btn-danger {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: rgb(var(--muted-red));
+  --bs-btn-border-color: rgb(var(--muted-red));
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #842F2B;
+  --bs-btn-hover-border-color: rgb(var(--muted-red));
+  --bs-btn-focus-shadow-rgb: 225, 83, 97;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: rgb(var(--muted-red));
+  --bs-btn-active-border-color: rgb(var(--muted-red));
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: rgb(var(--bs-primary-rgb));
+  --bs-btn-disabled-bg: rgb(var(--bs-secondary-rgb));
+  --bs-btn-disabled-border-color: rgb(var(--bs-secondary-rgb));
+}
+
+a {
+  cursor: pointer;
+}

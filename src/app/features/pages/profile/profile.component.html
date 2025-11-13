@@ -1,0 +1,163 @@
+<div class="container my-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">Profile</h2>
+    <h3 class="mb-4 text-primary">Account Details</h3>
+    <div *ngIf="!isEditing && !userDataLoaded" class="text-center py-5">
+        <app-loading></app-loading>
+    </div>
+    <div *ngIf="!isEditing && userDataLoaded" class="fs-4">
+        <p class="bg-white bg-opacity-50 p-2 w-50 rounded-2"><strong>Name :</strong> {{ userData?.name }}</p>
+        <p class="bg-white bg-opacity-50 p-2 w-50 rounded-2"><strong>Email :</strong> {{ userData?.email }}</p>
+        <p class="bg-white bg-opacity-50 p-2 w-50 rounded-2"><strong>Phone :</strong> {{ userData?.phone }}</p>
+
+        <div class="text-start">
+            <button class="btn btn-dark fs-5 me-2" (click)="toggleDetailsEdit()">Edit Details</button>
+            <button class="btn btn-dark fs-5 me-2" (click)="goToChangePass()">Change Password</button>
+        </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div *ngIf="isEditing">
+        <form [formGroup]="updateForm" (ngSubmit)="updateProfile()">
+            <label class="fs-4 py-2" for="name">Name</label>
+            <input type="text" class="form-control mb-3 fs-5" id="name" formControlName="name">
+            @if (updateForm.get('name')?.hasError('required') && updateForm.get('name')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                Name is required.
+            </div>
+            }
+            @if (updateForm.get('name')?.hasError('minlength') ) {
+            <div class="alert alert-danger" role="alert">
+                Name should at least have 3 characters.
+            </div>
+            }
+            @if (updateForm.get('name')?.hasError('maxlength')) {
+            <div class="alert alert-danger" role="alert">
+                Name should have at most 20 characters.
+            </div>
+            }
+            <label class="fs-4 py-2" for="email">Email</label>
+            <input type="email" class="form-control mb-3 fs-5" id="email" formControlName="email">
+            @if (updateForm.get('email')?.hasError('required') && updateForm.get('email')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                Email is required.
+            </div>
+            }
+            @if (updateForm.get('email')?.hasError('email')) {
+            <div class="alert alert-danger" role="alert">
+                Enter a valid email.
+            </div>
+            }
+            <label class="fs-4 py-2" for="phone">Phone</label>
+            <input type="text" class="form-control mb-3 fs-5" id="phone" formControlName="phone">
+            @if (updateForm.get('phone')?.hasError('required') && updateForm.get('phone')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                Phone is required.
+            </div>
+            }
+            @if (updateForm.get('phone')?.hasError('pattern')) {
+            <div class="alert alert-danger" role="alert">
+                Enter a valid phone number.
+            </div>
+            }
+            <div class="text-end">
+                <button type="submit" class="btn btn-success fs-5 mx-2">Update</button>
+                <button type="button" class="btn btn-danger fs-5" (click)="toggleDetailsEdit()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <hr>
+
+    <div *ngIf="!isEditing && !isAddingAddress">
+        <h3 class="mb-4 text-primary">Addresses</h3>
+        <div *ngIf="!addressesLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+        <div class="row g-3" *ngIf="addressesLoaded">
+            @for (address of addressList; track $index) {
+            <div class="col-6 col-md-4 col-lg-3 d-flex">
+                <div class="p-3 rounded-3 w-100 h-100 d-flex flex-column justify-content-center bg-white bg-opacity-50">
+                    <h5 class="my-2 fw-semibold">{{ address.name}}</h5>
+                    <p class="my-2 mx-3 fs-5">{{ address.details}}</p>
+                    <p class="my-2 mx-3 fs-5">{{ address.city}}</p>
+                    <p class="my-2 mx-3 fs-5">{{ address.phone}}</p>
+                    <button class="btn btn-dark w-75 my-2 mx-auto" (click)="removeAddress(address._id)">Remove</button>
+                </div>
+            </div>
+            }
+        </div>
+        <button class="btn btn-dark fs-5 my-3" (click)="toggleAddressEdit()">Add Address</button>
+    </div>
+
+
+    <!-- Address Form -->
+    <div *ngIf="isAddingAddress">
+        <h3 class="mb-4 text-primary">Add Address</h3>
+        <form [formGroup]="addressForm" (ngSubmit)="addAddress()">
+            <label class="fs-4 py-2" for="name">Address Title</label>
+            <input type="text" class="form-control mb-3 fs-5" id="name" formControlName="name">
+            @if (addressForm.get('name')?.hasError('required') && addressForm.get('name')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                Title is required.
+            </div>
+            }
+            @if (addressForm.get('name')?.hasError('minlength') ) {
+            <div class="alert alert-danger" role="alert">
+                Title should at least have 3 characters.
+            </div>
+            }
+            @if (addressForm.get('name')?.hasError('maxlength')) {
+            <div class="alert alert-danger" role="alert">
+                Title should have at most 20 characters.
+            </div>
+            }
+            <label class="fs-4 py-2" for="details">Detailed Address</label>
+            <input type="text" class="form-control mb-3 fs-5" id="details" formControlName="details">
+            @if (addressForm.get('details')?.hasError('required') && addressForm.get('details')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                Address Details are required.
+            </div>
+            }
+            @if (addressForm.get('details')?.hasError('minlength')) {
+            <div class="alert alert-danger" role="alert">
+                Details should at least have 10 characters.
+            </div>
+            }
+            <label class="fs-4 py-2" for="phone">Phone</label>
+            <input type="text" class="form-control mb-3 fs-5" id="phone" formControlName="phone">
+            @if (addressForm.get('phone')?.hasError('required') && addressForm.get('phone')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                Phone is required.
+            </div>
+            }
+            @if (addressForm.get('phone')?.hasError('pattern')) {
+            <div class="alert alert-danger" role="alert">
+                Enter a valid phone number.
+            </div>
+            }
+            <label class="fs-4 py-2" for="city">City</label>
+            <input type="text" class="form-control mb-3 fs-5" id="city" formControlName="city">
+            @if (addressForm.get('city')?.hasError('required') && addressForm.get('city')?.touched) {
+            <div class="alert alert-danger" role="alert">
+                City is required.
+            </div>
+            }
+            @if (addressForm.get('city')?.hasError('minlength') ) {
+            <div class="alert alert-danger" role="alert">
+                City should at least have 3 characters.
+            </div>
+            }
+            @if (addressForm.get('name')?.hasError('maxlength')) {
+            <div class="alert alert-danger" role="alert">
+                City should have at most 20 characters.
+            </div>
+            }
+            <div class="text-end">
+                <button type="submit" class="btn btn-success fs-5 mx-2">Add</button>
+                <button type="button" class="btn btn-danger fs-5" (click)="toggleAddressEdit()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>

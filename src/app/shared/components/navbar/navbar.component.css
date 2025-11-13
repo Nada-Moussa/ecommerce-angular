@@ -1,0 +1,21 @@
+.navbar {
+  min-height: 50px; 
+  transition: all 0.3s ease; 
+  padding: 1.2rem 1rem;  
+}
+
+.active {
+    color: rgb(var(--bs-info-rgb)) !important;
+    background-color: rgb(var(--bs-danger-rgb));
+    border-radius: 10px;
+    font-weight: bold !important;
+}
+
+.navbar-shrink {
+  padding: 0.5rem 1rem;      
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); 
+}
+
+.nav-link.active {
+  padding: 8px;
+}

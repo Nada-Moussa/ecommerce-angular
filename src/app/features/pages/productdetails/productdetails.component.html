@@ -1,0 +1,59 @@
+<div class="container mt-5 py-5">
+  <h2 class="my-4 text-primary fw-semibold">Product Details</h2>
+  <div *ngIf="!prodsLoaded" class="text-center py-5">
+    <app-loading></app-loading>
+  </div>
+  <div class="my-4 d-flex align-items-center" *ngIf="prodsLoaded">
+    <img [src]="prod.imageCover" class="img-fluid object-fit-contain rounded-2 bg-white bg-opacity-50"
+      style="height: 500px; width: 100%; max-width: 500px;" alt="Product image">
+    <div class="mx-2 p-3 rounded-2 bg-warning bg-opacity-25">
+      <p class="text-muted fs-5 mb-1">Subcategory: {{prod.subcategory[0].name}}</p>
+      <h2 class="text-primary">{{prod.title}}</h2>
+      <p class="fs-4">{{prod.description}}</p>
+      @if(prod.sold < 1000000) { <p><i class="bi bi-fire fs-5" style="color: orangered;"></i><span
+          class="fw-semibold fs-5"> {{prod.sold | number: '1.0-0'}} items
+          sold</span></p>
+        }
+        <p class="text-muted fs-5 mb-2">Quantity</p>
+        <div class="d-flex align-items-center">
+          <button class="btn btn-light me-2" (click)="updateQuantity(quantity-1)" [disabled]="(quantity === 0)"> -
+          </button>
+          <p class="mb-0 px-3 d-flex align-items-center justify-content-center fs-5">{{ quantity }}</p>
+          <button class="btn btn-light ms-2" (click)="updateQuantity(quantity+1)">+</button>
+        </div>
+        <div class="d-flex flex-column align-items-start">
+          <button class="btn btn-dark my-2 w-auto fs-5" *ngIf="!isInCart()"
+            (click)="updateItemQuantity(prod.id, quantity)">
+            @if (isAddingToCart) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            } @else {
+            <span>Add to Cart</span>
+            }
+          </button>
+          <button class="btn btn-dark my-2 w-auto fs-5" *ngIf="isInCart()"
+            (click)="updateItemQuantity(prod.id, quantity)">
+            @if (isUpdatingCart) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            } @else {
+            <span>Update Cart</span>
+            }
+          </button>
+          <button class="btn btn-dark w-auto fs-5" *ngIf="!isInWishlist(prod.id)" [disabled]="isInCart()"
+            (click)="addToWishlist(prod.id)">
+            @if (isAddingToWishlist) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            } @else {
+            <span>Add to Wishlist</span>
+            }
+          </button>
+          <button class="btn btn-dark w-auto fs-5" *ngIf="isInWishlist(prod.id)" [disabled]="isInCart()"
+            (click)="removeFromWishlist(prod.id)">@if (isRemovingFromWishlist) {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            } @else {
+            <span>Remove from Wishlist</span>
+            }
+          </button>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">{{catName}} Sub Categories</h2>
+
+    <div *ngIf="!subCatsLoaded" class="text-center py-5">
+        <app-loading></app-loading>
+    </div>
+    <div class="row g-3" *ngIf="subCatsLoaded">
+        @for (subcat of subCats; track $index) {
+        <div class="col-6 col-md-4 col-lg-3 d-flex" (click)="goToSubCatProds(subcat._id, subcat.name)">
+            <div class="py-2 border rounded-3 w-100 h-100 d-flex flex-column bg-danger">
+                <p class="text-center my-2 fs-5 text-light">{{ subcat.name }}</p>
+            </div>
+        </div>
+        }
+        @empty {
+            <h4 class="text-muted">No subcategories available.</h4>
+        }
+    </div>
+</div>

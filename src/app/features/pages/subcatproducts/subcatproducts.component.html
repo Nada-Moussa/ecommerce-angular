@@ -1,0 +1,42 @@
+<div class="container mt-5 py-5">
+    <h2 class="my-4 text-primary fw-semibold">{{this.subCatName}}</h2>
+    <div *ngIf="!prodsLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+    <div class="row g-3" *ngIf="prodsLoaded">
+        @for (prod of filteredProds; track $index) {
+        <div class="col-6 col-md-4 col-lg-3 d-flex">
+            <div class="py-2 border rounded-3 w-100 h-100 d-flex flex-column bg-white">
+                <div class="d-flex w-100 justify-content-end">
+                    <button class="btn btn-light me-2" [disabled]="isInCart(prod.id)" (click)="toggleWishlist(prod.id)">
+                        <i class="bi"
+                            [ngClass]="isInWishlist(prod.id) ? 'bi-heart-fill text-danger fs-5' : 'bi-heart fs-5'"></i>
+                    </button>
+                    <button class="btn btn-light me-2" (click)="toggleCart(prod.id)">
+                        <i class="bi"
+                            [ngClass]="isInCart(prod.id) ? 'bi bi-cart-fill text-danger fs-5' : 'bi bi-cart fs-5'"></i>
+                    </button>
+                </div>
+                <div class="flex-grow-1 d-flex align-items-center justify-content-center"
+                    (click)="prodDetails(prod.id)">
+                    <img [src]="prod.imageCover" class="img-fluid">
+                </div>
+                <p class="my-1 mx-2 text-success">{{ prod.category.name}}</p>
+                <p class="mt-0 mb-2 mx-2 fs-5">{{ prod.title }}</p>
+                <div class="mx-2 d-flex align-items-center justify-content-between">
+                    <span class="fs-6 badge text-bg-secondary">{{prod.price | number: '1.0-0'}} EGP</span>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-star-fill fs-4" style="color: gold;"></i>
+                        <span class="fs-6 fst-italic mx-2">{{prod.ratingsAverage}}</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        }
+        @empty {
+        <h4 class="text-muted">No products available.</h4>
+        }
+    </div>
+</div>

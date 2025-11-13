@@ -1,0 +1,51 @@
+<div class="pt-5 mt-3 d-flex flex-column justify-content-center ">
+    <div class="container-fluid bg-primary d-flex justify-content-center py-4">
+        <img src="ShopSphere.png" class="img-fluid" style="max-width: 600px; width: 90%;">
+    </div>
+
+    <!--Brands-->
+    <div class="m-5">
+        <h1 class="text-primary mb-3">Shop By Brand</h1>
+
+        <div *ngIf="!brandsLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+
+        <!-- Carousel -->
+        <owl-carousel-o *ngIf="brandsLoaded && allBrands.length > 0" [options]="customOptions">
+            <ng-container *ngFor="let brand of allBrands">
+                <ng-template carouselSlide>
+                    <div class="brand-item text-center p-3 bg-white rounded-3 shadow-sm"
+                        (click)="goToBrandProds(brand._id, brand.name)" style="cursor: pointer;">
+                        <img [src]="brand.image" [alt]="brand.name" class="w-75 mx-auto d-block mb-2" />
+                    </div>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+
+    <!-- Categories -->
+    <div class="m-5">
+        <h1 class="text-primary mb-3">Explore Our Categories</h1>
+
+        <div *ngIf="!catsLoaded" class="text-center py-5">
+            <app-loading></app-loading>
+        </div>
+
+        <!-- Carousel -->
+        <owl-carousel-o *ngIf="catsLoaded && allCats.length > 0" [options]="customOptions">
+            <ng-container *ngFor="let cat of allCats">
+                <ng-template carouselSlide>
+                    <div class="cat-item text-center p-3 bg-white rounded-3 shadow-sm"
+                        (click)="goToSubCat(cat._id, cat.name)" style="cursor: pointer;">
+                        <p class="fs-5 fw-semibold">{{cat.name}}</p>
+                        <img [src]="cat.image" [alt]="cat.name" class="w-75 mx-auto d-block mb-2" />
+                    </div>
+                </ng-template>
+            </ng-container>
+        </owl-carousel-o>
+    </div>
+
+
+
+</div>
