@@ -16,7 +16,7 @@ export class OrderService {
   }
 
   createCheckoutSession(cartId: string, address: orderAddress): Observable<any> {
-    return this._httpClient.post(`${this.orderBaseUrl}/checkout-session/${cartId}`, address)
+    return this._httpClient.post(`${this.orderBaseUrl}/checkout-session/${cartId}?url=https://ecommerce-angular-vercel.vercel.app`, address)
   }
 
   // gets all orders for all users - better be called from admin access
